@@ -7,10 +7,13 @@ public class Player : MonoBehaviour
 {
     
     [SerializeField] private GameInput gameInput;
+    //movement default numbers
     [SerializeField] private float baseMoveSpeed = 7f;
     [SerializeField] private float ladderMoveSpeed = 2f;
+    [SerializeField] private float dropMoveSpeed = 2f;
     [SerializeField] private float apexHeight = .5f;
     [SerializeField] private float apexTime = .05f;
+    //boundaries for player
     [SerializeField] private float groundLevel;
     [SerializeField] private float leftWall = -9f;
     [SerializeField] private float rightWall = 9f;
@@ -20,10 +23,12 @@ public class Player : MonoBehaviour
     private bool _canDoubleJump;
     private float _dashTimer;
     private bool _dashActive;
-    private float _jumpVelocity;
-    private float _verticalVelocity;
     private bool _onLadder;
     private bool _dropping;
+    
+    private float _jumpVelocity;
+    private float _verticalVelocity;
+    
     
     void Start()
     {
@@ -101,7 +106,7 @@ public class Player : MonoBehaviour
 
         if (_onLadder)
         {
-            Debug.Log("Player_OnLadder");
+            //Debug.Log("Player_OnLadder");
             _verticalVelocity = inputVector.y * ladderMoveSpeed;
         }
         else
@@ -111,6 +116,12 @@ public class Player : MonoBehaviour
         
         float yVelocity = _jumpVelocity + _verticalVelocity;
         float deltaY = yVelocity * Time.deltaTime;
+
+        if (_dropping)
+        {
+            deltaY = -dropMoveSpeed * gravity * Time.deltaTime;
+            _dropping = false;
+        }
         
         transform.position += new Vector3(deltaX, deltaY, 0);
 

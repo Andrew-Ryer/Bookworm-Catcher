@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="515b1211-564e-4bf5-9b47-24703bcafae7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Bookworm-Catcher/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Bookworm-Catcher/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DevFolders/NC/Scenes/NatTestScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DevFolders/NC/Scenes/NatTestScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DevFolders/NC/Scripts/GameInput.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DevFolders/NC/Scripts/GameInput.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DevFolders/NC/Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DevFolders/NC/Scripts/Player.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DevFolders/NC/Settings/PlayerInputActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DevFolders/NC/Settings/PlayerInputActions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/DevFolders/NC/Settings/PlayerInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/DevFolders/NC/Settings/PlayerInputActions.inputactions" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NC/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NC/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/NC/PlayerInputActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/NC/PlayerInputActions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/NC/PlayerInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/NC/PlayerInputActions.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +108,8 @@
       <workItem from="1776200470083" duration="264000" />
       <workItem from="1776219405189" duration="1812000" />
       <workItem from="1776286694856" duration="721000" />
-      <workItem from="1776534991258" duration="5697000" />
+      <workItem from="1776534991258" duration="6276000" />
+      <workItem from="1776729667861" duration="1115000" />
     </task>
     <servers />
   </component>

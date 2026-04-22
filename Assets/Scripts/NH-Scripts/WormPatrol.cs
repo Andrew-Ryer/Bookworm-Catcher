@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class WormPatrol : MonoBehaviour
@@ -10,6 +11,11 @@ public class WormPatrol : MonoBehaviour
     [SerializeField] private Transform groundDetection;
 
     [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] private LayerMask ladderLayerMask;
+
+    [SerializeField] private GameObject playerGameObject;
+    private Rigidbody2D rb;
+    private bool touchingPlayer = false;
 
 
     public enum StateMachine
@@ -21,6 +27,11 @@ public class WormPatrol : MonoBehaviour
 
     public StateMachine currentState;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
 
     private void Start()
     {
@@ -31,6 +42,10 @@ public class WormPatrol : MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, -180, 0);
         }
+
+        // Subscribe to OnCaughtBookworm event from Player
+        Player player = playerGameObject.GetComponent<Player>();
+        player.OnCaughtBookworm += BookwormCaught;
     }
 
     private void Update()
@@ -44,7 +59,7 @@ public class WormPatrol : MonoBehaviour
                 Climb();
                 break;
             case StateMachine.Caught:
-                Caught();
+                // Do nothing
                 break;
         }
     }
@@ -56,6 +71,7 @@ public class WormPatrol : MonoBehaviour
 
         // Checks for when ground ends
         RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, obstacleRaycastDistance, groundLayerMask);
+        RaycastHit2D ladderInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, obstacleRaycastDistance, ladderLayerMask);
         RaycastHit2D pathAheadInfo = Physics2D.Raycast(groundDetection.position, Vector2.right, obstacleRaycastDistance, groundLayerMask);
 
         // Changes direction when ground ends
@@ -67,22 +83,10 @@ public class WormPatrol : MonoBehaviour
             ChangeDirectionLeftRight();
         }
 
-        // Changes direction when it detects a barrier ahead
-        // if (pathAheadInfo.collider != false)
-        // {
-        //     if (pathAheadInfo.collider.CompareTag("Barrier"))
-        //     {
-        //         if (movingRight)
-        //         {
-        //             transform.eulerAngles = new Vector3(0, -180, 0);
-        //             movingRight = false;
-        //         } else
-        //         {
-        //             transform.eulerAngles = new Vector3(0, 0, 0);
-        //             movingRight = true;
-        //         }
-        //     }
-        // }
+        if (ladderInfo != false)
+        {
+            currentState = StateMachine.Climb;
+        }
     }
 
     private void ChangeDirectionLeftRight()
@@ -101,11 +105,39 @@ public class WormPatrol : MonoBehaviour
 
     private void Climb()
     {
-        
+        // Debug.Log("Climbing");
     }
 
-    private void Caught()
+    private void BookwormCaught(object sender, EventArgs e)
     {
-        
+        // If the bookworm is touching the player when the event is triggered, assume this is the bookworm that was caught
+        if (touchingPlayer)
+        {
+            currentState = StateMachine.Caught;
+            Debug.Log("Bookworm caught!");
+            Player player = playerGameObject.GetComponent<Player>();
+            player.OnCaughtBookworm -= BookwormCaught;
+            rb.gravityScale = 0f;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            touchingPlayer = true;
+        } else if (collision.collider.CompareTag("Ladder"))
+        {
+            // Ignore collisions with ladders
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Player"))
+        {
+            touchingPlayer = false;
+        }
     }
 }

@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class DepositBox : MonoBehaviour, IBookwormParent
 {
+    public event EventHandler OnBookwormDeposited;
+    
     [SerializeField] private Transform bookwormHoldPoint;
     private Bookworm _bookworm;
     public Transform GetBookwormTransform()
@@ -15,8 +18,7 @@ public class DepositBox : MonoBehaviour, IBookwormParent
 
         if (_bookworm != null)
         {
-            //TODO: Finish DepositBox SetBookworm
-            //OnPickedSomething?.Invoke(this, EventArgs.Empty);
+            OnBookwormDeposited?.Invoke(this, EventArgs.Empty);
         }
     }
 

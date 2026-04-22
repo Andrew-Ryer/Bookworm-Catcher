@@ -229,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8671069642866240918, guid: 93576b5f3624bab42987f60c7b11e4bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9936212
+      value: -3.7
       objectReference: {fileID: 0}
     - target: {fileID: 8671069642866240918, guid: 93576b5f3624bab42987f60c7b11e4bf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -995,6 +995,10 @@ MonoBehaviour:
   speed: 2.5
   movingRight: 1
   groundDetection: {fileID: 1299520181}
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  currentState: 0
 --- !u!212 &1846851241
 SpriteRenderer:
   serializedVersion: 2

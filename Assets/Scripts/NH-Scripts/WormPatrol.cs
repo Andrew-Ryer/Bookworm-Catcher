@@ -9,6 +9,8 @@ public class WormPatrol : MonoBehaviour
 
     [SerializeField] private Transform groundDetection;
 
+    [SerializeField] private LayerMask groundLayerMask;
+
 
     public enum StateMachine
     {
@@ -53,22 +55,16 @@ public class WormPatrol : MonoBehaviour
         transform.Translate(Vector2.right * speed * Time.deltaTime);
 
         // Checks for when ground ends
-        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, obstacleRaycastDistance);
-        RaycastHit2D pathAheadInfo = Physics2D.Raycast(groundDetection.position, Vector2.right, obstacleRaycastDistance);
+        RaycastHit2D groundInfo = Physics2D.Raycast(groundDetection.position, Vector2.down, obstacleRaycastDistance, groundLayerMask);
+        RaycastHit2D pathAheadInfo = Physics2D.Raycast(groundDetection.position, Vector2.right, obstacleRaycastDistance, groundLayerMask);
 
         // Changes direction when ground ends
         if (groundInfo.collider == false)
         {
-            // Debug.Log("Floor not detected");
-            if (movingRight)
-            {
-                transform.eulerAngles = new Vector3(0, -180, 0);
-                movingRight = false;
-            } else
-            {
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                movingRight = true;
-            }
+            ChangeDirectionLeftRight();
+        } else if (pathAheadInfo.collider != false)
+        {
+            ChangeDirectionLeftRight();
         }
 
         // Changes direction when it detects a barrier ahead
@@ -87,6 +83,20 @@ public class WormPatrol : MonoBehaviour
         //         }
         //     }
         // }
+    }
+
+    private void ChangeDirectionLeftRight()
+    {
+        // Debug.Log("Floor not detected");
+        if (movingRight)
+        {
+            transform.eulerAngles = new Vector3(0, -180, 0);
+            movingRight = false;
+        } else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            movingRight = true;
+        }
     }
 
     private void Climb()

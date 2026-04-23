@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="515b1211-564e-4bf5-9b47-24703bcafae7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Bookworm-Catcher/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Bookworm-Catcher/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/Bookworm.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/Bookworm.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/LadderBlock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/LadderBlock.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/LadderBottomBlock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/LadderBottomBlock.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/LadderTopBlock.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/AR-Prefabs/LadderTopBlock.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/AR-Scenes/ARTest.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/AR-Scenes/ARTest.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/AR/TestingLevel.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/AR/TestingLevel.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/NC/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NC/Player.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,10 +107,7 @@
       <workItem from="1776286694856" duration="721000" />
       <workItem from="1776534991258" duration="6276000" />
       <workItem from="1776729667861" duration="4974000" />
-      <workItem from="1776818492430" duration="1194000" />
-      <workItem from="1776823651949" duration="2410000" />
-      <workItem from="1776828541825" duration="2849000" />
-      <workItem from="1776900181653" duration="2103000" />
+      <workItem from="1776818492430" duration="4021000" />
     </task>
     <servers />
   </component>

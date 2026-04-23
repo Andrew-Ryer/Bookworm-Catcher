@@ -53,7 +53,23 @@ public class Player : MonoBehaviour, IBookwormParent
     }
 
     // Update is called once per frame
-    void Update()
+    
+    /*
+     * Notes:
+     * While falling too fast you sink into the platform
+     * After sinking, the y-level that you sink to becomes the new y-level for future jumps on that platform
+     * 
+     * Proposed fix:
+     * Reset the y-position of the player to be ON level with the platform
+     * once it reaches below the y-threshold of the platform
+     *
+     * Temp changes / fixes for level parser implimentation:
+     * I had to change the Raycast to be longer to scale with the larger size of the player sprite
+     * I added a colored Raycast for debugging, so we know the length of the Physics2D.Raycast
+     * 
+    */
+
+    void FixedUpdate()
     {
         float currentMoveSpeed = baseMoveSpeed;
         //handle dash timer
@@ -71,7 +87,8 @@ public class Player : MonoBehaviour, IBookwormParent
         //check for on ladder
         _onLadder = Physics2D.Raycast(transform.position, Vector2.down, .05f, LayerMask.GetMask("Ladder"));
         //check for on ground/jump capability
-        _isGrounded = Physics2D.Raycast(transform.position, Vector3.down, .005f, LayerMask.GetMask("GroundLayer"));
+        _isGrounded = Physics2D.Raycast(transform.position, Vector3.down, 1.01f, LayerMask.GetMask("GroundLayer"));
+        Debug.DrawRay(transform.position, Vector2.down * 1.01f, Color.red);
         _canJump = _isGrounded || _onLadder;
         
         //x movement things
@@ -111,7 +128,7 @@ public class Player : MonoBehaviour, IBookwormParent
         
         transform.position += new Vector3(deltaX, deltaY, 0);
 
-        
+        Debug.Log(_isGrounded);
         ClampPosition();
     }
     
@@ -129,6 +146,7 @@ public class Player : MonoBehaviour, IBookwormParent
 
     private void GameInput_OnJump(object sender, EventArgs e)
     {
+        Debug.Log("Jump");
         if (_canJump)
         {
             //Debug.Log("Player_Jump");

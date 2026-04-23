@@ -9,7 +9,7 @@ public class AC_PlayerAnimation : MonoBehaviour
 
     void Start()
     {
-        animator = GetComponent<Animator>();
+        //  animator = GetComponent<Animator>();
         currentAnim = "FacingFront";
     }
     

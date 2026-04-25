@@ -27,6 +27,8 @@ public class Player : MonoBehaviour, IBookwormParent
     private float _dashTimer;
     private bool _dashActive;
     private bool _onLadder;
+    private bool _wasOnLadder; //checks if object is ONLY on the ladder
+    private bool _nearLadder;
     private bool _dropping;
     
     private float _jumpVelocity;
@@ -68,10 +70,30 @@ public class Player : MonoBehaviour, IBookwormParent
             }
         }
 
-        //check for on ladder
-        _onLadder = Physics2D.Raycast(transform.position, Vector2.down, .05f, LayerMask.GetMask("Ladder"));
-        //check for on ground/jump capability
+        //check for on ground
         _isGrounded = Physics2D.Raycast(transform.position, Vector3.down, .005f, LayerMask.GetMask("GroundLayer"));
+        //checks if standing in front of ladder
+        _nearLadder = Physics2D.Raycast(transform.position, Vector2.down, .05f, LayerMask.GetMask("Ladder"));
+        
+        //if was previously not _onLadder if _isGrounded
+        if (!_wasOnLadder)
+        {
+            if (_isGrounded && _nearLadder)
+            {
+                _onLadder = true;
+            }
+            else
+            {
+                _onLadder = false;
+            }
+        }
+
+        if (!_nearLadder)
+        {
+            _onLadder = false;
+        }
+        
+        //check for jump capability
         _canJump = _isGrounded || _onLadder;
         
         //x movement things
@@ -113,6 +135,8 @@ public class Player : MonoBehaviour, IBookwormParent
 
         
         ClampPosition();
+        //update _wasOnLadder
+        _wasOnLadder = _onLadder;
     }
     
     

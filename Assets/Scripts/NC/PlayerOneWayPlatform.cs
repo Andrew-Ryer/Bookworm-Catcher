@@ -7,19 +7,14 @@ public class PlayerOneWayPlatform : MonoBehaviour
     private const string GROUND_LAYER = "GroundLayer";
     
     private GameObject _currentOneWayPlatform;
-    private CapsuleCollider2D _playerCollider;
-    private GameObject _player;
-
-    private void Start()
-    {
-        _currentOneWayPlatform = gameObject;
-        _player = GameObject.FindGameObjectWithTag("Player");
-        _playerCollider = _player.GetComponent<CapsuleCollider2D>();
-    }
+    [SerializeField] CapsuleCollider2D _playerCollider;
+    [SerializeField] PlayerRefactor _player;
+    
 
     private void Update()
     {
-        if (_player.GetComponent<PlayerRefactor>().IsDropping())
+        //if the player is dropping then disable the current collision
+        if (_player.IsDropping())
         {
             Debug.Log("Platform_Update_Dropping");
             if (_currentOneWayPlatform != null)
@@ -31,12 +26,14 @@ public class PlayerOneWayPlatform : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log("Platform_CollisionEnter");
+        Debug.Log("Platform_CollisionEnter");
         if (collision.gameObject.layer == LayerMask.NameToLayer(GROUND_LAYER))
         {
-            //Debug.Log("Platform_CollisionEnter_Ground");
+            Debug.Log("Platform_CollisionEnter_Ground");
             _currentOneWayPlatform = collision.gameObject;
+            _player.SetIsDropping(false); //player should not drop after hitting another block
         }
+        
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -45,7 +42,7 @@ public class PlayerOneWayPlatform : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer(GROUND_LAYER))
         {
             _currentOneWayPlatform = null;
-            _player.GetComponent<PlayerRefactor>().SetIsDropping(false); //player should not drop after exiting one of the blocks
+            //_player.SetIsDropping(false); //player should not drop after exiting one of the blocks
         }
     }
 
@@ -57,6 +54,6 @@ public class PlayerOneWayPlatform : MonoBehaviour
         Physics2D.IgnoreCollision(_playerCollider, platformCollider);
         yield return new WaitForSeconds(0.2f);
         Physics2D.IgnoreCollision(_playerCollider, platformCollider, false);
-        _player.GetComponent<PlayerRefactor>().SetIsDropping(false);
+        _player.SetIsDropping(false);
     }
 }

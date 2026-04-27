@@ -177,7 +177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3033402584958927883, guid: 76a088a1d98eaee44bc7f0ab625acbc6, type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7135887414987808262, guid: 76a088a1d98eaee44bc7f0ab625acbc6, type: 3}
       propertyPath: m_Name
@@ -442,7 +442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8870077666049657432, guid: 0c63b077ecba69147ac0bdc87be1e6be, type: 3}
       propertyPath: dropMoveSpeed
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8870077666049657432, guid: 0c63b077ecba69147ac0bdc87be1e6be, type: 3}
       propertyPath: ladderMoveSpeed
@@ -867,8 +867,8 @@ MonoBehaviour:
   gameInput: {fileID: 1783819182}
   bookwormHoldPoint: {fileID: 1105599832}
   baseMoveSpeed: 7
-  ladderMoveSpeed: 2
-  dropMoveSpeed: 2
+  ladderMoveSpeed: 5
+  dropMoveSpeed: 0.5
   apexHeight: 4
   apexTime: 0.5
   groundLevel: 0

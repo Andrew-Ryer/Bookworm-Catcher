@@ -45,6 +45,10 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
     private State previousState;
     //------------------------
 
+    //------Alyssa--------
+    private float getMovementX;
+    //--------------------
+
     private bool _isGrounded;
     private bool _canJump;
     private bool _canDoubleJump;
@@ -168,6 +172,9 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
         previousPosition = transform.position;
         previousState = currentState;
         //------------------------
+
+        //------Alyssa-----
+        UpdateDeltaXMovement(deltaX);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -355,6 +362,30 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
     {
         return currentState == State.Moving;
     }
+
+    public State GetState()
+    {
+        return currentState;
+    }
     //-------------------------
+
+
+    //--------Alyssa----------
+    private void UpdateDeltaXMovement(float deltaX)
+    {
+        getMovementX = deltaX;
+        Debug.Log(getMovementX);
+    }
+
+    public float GetMovementX()
+    {
+        return getMovementX;
+    }
+
+    public bool GetIsGrounded()
+    {
+        return _isGrounded;
+    }
+    //------------------------
     
 }

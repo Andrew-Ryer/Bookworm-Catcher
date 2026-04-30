@@ -415,6 +415,11 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
         return currentState == State.Moving;
     }
 
+    public State GetState()
+    {
+        return currentState;
+    }
+
     //---------MARI-------------------------
     public bool IsDashActive()
     {

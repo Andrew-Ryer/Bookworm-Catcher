@@ -42,9 +42,7 @@ public class DepositBox : MonoBehaviour, IBookwormParent
                 _hasShownMissingScoreSystemWarning = true;
             }
 
-            //---------MARI-------------------------
-            scoreSystem?.AddPoints(pointsPerBookworm);
-            scoreSystem?.RegisterCaughtWorm();
+            scoreSystem?.RegisterCaughtWorm(pointsPerBookworm);
             //--------------------------------------
     
             OnBookwormDeposited?.Invoke(this, EventArgs.Empty);

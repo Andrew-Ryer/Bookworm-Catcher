@@ -30,7 +30,7 @@ public class GameTimer : MonoBehaviour
 
         LevelParser levelParser = FindFirstObjectByType<LevelParser>();
         ScoreSystem scoreSystem = ScoreSystem.Instance != null ? ScoreSystem.Instance : FindFirstObjectByType<ScoreSystem>();
-        if (levelParser != null && scoreSystem != null)
+        if (levelParser != null && scoreSystem != null && levelParser.wormCountGetter() > 0)
         {
             scoreSystem.SetWormCount(levelParser.wormCountGetter());
         }

@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
 {
-    private const int PointsPerWorm = 100;
-
     public static ScoreSystem Instance { get; private set; }
     public event EventHandler OnScoreChanged;
 
     [SerializeField] private int startingScore = 0;
-    [SerializeField] private int testWormCount = 10;
     private int _score;
     private int _caughtWormCount;
     private int _totalWormCount;
@@ -58,15 +55,20 @@ public class ScoreSystem : MonoBehaviour
         OnScoreChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void RegisterCaughtWorm()
+    public void RegisterCaughtWorm(int pointsPerWorm)
     {
-        if (_remainingWormCount <= 0)
+        if (_remainingWormCount <= 0 || pointsPerWorm <= 0)
         {
+            Debug.LogWarning("Worm catch ignored. Remaining=" + _remainingWormCount + ", pointsPerWorm=" + pointsPerWorm + ", total=" + _totalWormCount);
             return;
         }
 
         _caughtWormCount++;
         _remainingWormCount = Mathf.Max(0, _remainingWormCount - 1);
+        _score += pointsPerWorm;
+        OnScoreChanged?.Invoke(this, EventArgs.Empty);
+
+        Debug.Log("Worm caught: " + _caughtWormCount + "/" + _totalWormCount + " caught, " + _remainingWormCount + " left.");
     }
 
     public void SetWormCount(int totalWormCount)
@@ -78,40 +80,10 @@ public class ScoreSystem : MonoBehaviour
         OnScoreChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    [ContextMenu("Test/Set Worm Count (Resets Score)")]
-    private void SetWormCountForTest()
-    {
-        SetWormCount(testWormCount);
-    }
-
-    [ContextMenu("Test/Catch One Worm")]
-    private void CatchOneWormForTest()
-    {
-        if (_totalWormCount <= 0)
-        {
-            SetWormCount(testWormCount);
-        }
-
-        if (_remainingWormCount <= 0)
-        {
-            return;
-        }
-
-        RegisterCaughtWorm();
-        AddPoints(PointsPerWorm);
-        Debug.Log("Test catch: score=" + _score + ", caught=" + _caughtWormCount + ", remaining=" + _remainingWormCount + ", total=" + _totalWormCount);
-    }
-
     public void SetScore(int newScore)
     {
         _score = Mathf.Max(0, newScore);
         OnScoreChanged?.Invoke(this, EventArgs.Empty);
-    }
-
-    [ContextMenu("Add 100 Score (Test)")]
-    private void Add100ScoreForTest()
-    {
-        AddPoints(100);
     }
 
     public void ResetScore()

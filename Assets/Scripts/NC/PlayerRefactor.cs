@@ -38,12 +38,16 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
     public event EventHandler SingleJumpActivated;
     public event EventHandler DoubleJumpActivated;
     public event EventHandler LandingActivated;
-    //public event EventHandler WalkingActivated;
+    public event EventHandler MovingActivated;
 
     private Vector2 previousPosition;
     private State currentState;
     private State previousState;
     //------------------------
+
+    //------Alyssa--------
+    private float getMovementX;
+    //--------------------
 
     private bool _isGrounded;
     private bool _canJump;
@@ -180,6 +184,9 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
         previousPosition = transform.position;
         previousState = currentState;
         //------------------------
+
+        //------Alyssa-----
+        UpdateDeltaXMovement(deltaX);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -227,10 +234,6 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
 
         _dashActive = true;
         _dashTimer = 0f;
-
-        //Moises---------
-        currentState = State.Dashing;
-        //---------------
     }
 
     private void GameInput_OnJump(object sender, EventArgs e)
@@ -240,7 +243,6 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
             //Debug.Log("Player_Jump");
             _jumpVelocity = 2f * apexHeight / apexTime;
             //Moises---------
-            currentState = State.SingleJump;
             SingleJumpActivated?.Invoke(this, EventArgs.Empty);
             //---------------
             _canJump = false;
@@ -251,7 +253,6 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
             //Debug.Log("Player_DoubleJump");
             _jumpVelocity = 2f * apexHeight / apexTime;
             //Moises---------
-            currentState = State.DoubleJump;
             DoubleJumpActivated?.Invoke(this, EventArgs.Empty);
             //---------------
             _canJump = false;
@@ -310,6 +311,25 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
         {
             //TODO: Finish Player SetBookworm
             OnCaughtBookworm?.Invoke(this, EventArgs.Empty);
+
+            /*
+            Nick's code -----------------------------------------------------------------------
+            */
+            // Stop bookworms from moving once they are caught
+            WormPatrol wormPatrol = _bookworm.GetComponent<WormPatrol>();
+            WormAttackLadder wormAttackLadder = _bookworm.GetComponent<WormAttackLadder>();
+
+            // Check which bookworm type was caught to call the proper method
+            if (wormPatrol != null)
+            {
+                wormPatrol.BookwormCaught();
+            } else if (wormAttackLadder != null)
+            {
+                wormAttackLadder.BookwormCaught();
+            }
+            /*
+            -----------------------------------------------------------------------------------
+            */
         }
     }
 
@@ -335,7 +355,7 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
         if((Vector2)transform.position != previousPosition)
         {
             //If Player is moving along a ladder
-            if(_onLadder)
+            if(_onLadder && !_isGrounded)
             {
                 currentState = State.Climbing;
             }
@@ -344,16 +364,36 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
             {
                 currentState = State.Falling;
             }
+            else if(_canJump == false && _canDoubleJump == true)
+            {
+                currentState = State.SingleJump;
+            }
+            else if(_canJump == false && _canDoubleJump == false && !_isGrounded)
+            {
+                currentState = State.DoubleJump;
+            }
             //If player is moving left or right, without dashing
-            else if ((transform.position.x != previousPosition.x) && (transform.position.y == previousPosition.y) && !_dashActive)
+            else if ((transform.position.x != previousPosition.x) && Mathf.Approximately(transform.position.y,previousPosition.y))
             {
                 //If going from falling to walking
                 if (previousState == State.Falling)
                 {
                     LandingActivated?.Invoke(this, EventArgs.Empty);
                 }
-                //WalkingActivated?.Invoke(this, EventArgs.Empty);
-                currentState = State.Moving;
+                if (_isGrounded)
+                {
+                    //if dashing
+                    if(_dashActive == true)
+                    {
+                        currentState = State.Dashing;
+                    }
+                    //if grounded, changing position, and not dashing
+                    else
+                    {
+                        MovingActivated?.Invoke(this, EventArgs.Empty);
+                        currentState = State.Moving;
+                    }
+                }
             }
         }
         //If player is not changing direction
@@ -417,5 +457,24 @@ public class PlayerRefactor : MonoBehaviour, IBookwormParent
     }
     //--------------------------------------
     //-------------------------
+
+
+    //--------Alyssa----------
+    private void UpdateDeltaXMovement(float deltaX)
+    {
+        getMovementX = deltaX;
+        //Debug.Log(getMovementX);
+    }
+
+    public float GetMovementX()
+    {
+        return getMovementX;
+    }
+
+    public bool GetIsGrounded()
+    {
+        return _isGrounded;
+    }
+    //------------------------
     
 }

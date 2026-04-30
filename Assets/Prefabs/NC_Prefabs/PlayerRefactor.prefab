@@ -324,7 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7767b6263d26c94a8a2747587dac519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AC_PlayerAnimationRefactor
-  playerRefactor: {fileID: 0}
+  playerRefactor: {fileID: 1458327428207015338}
   animator: {fileID: 2225439702497066304}
 --- !u!50 &3033402584958927883
 Rigidbody2D:
